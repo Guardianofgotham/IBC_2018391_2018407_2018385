@@ -2,6 +2,21 @@
 
 pragma solidity >=0.7.0 <0.9.0;
 
+contract EventFactory {
+    
+    address[] public allEvents;
+    
+    function createEvent(string memory _description, uint _minimumAmount, uint _eventEndDate) public{
+        address newEvent = address(new Event(_description, _minimumAmount, _eventEndDate, msg.sender));
+        allEvents.push(newEvent);
+    }
+    
+    function getEvents() public view returns(address[] memory _allEvents) {
+        return allEvents;
+    }
+    
+}
+
 contract Event{
     // Address of the person who created instantiated this contract
     address public manager;
@@ -27,13 +42,13 @@ contract Event{
     // Total money recived by this contract since creation (wei)
     uint public totalAmountCollected;
     
-    constructor(string memory _description, uint _minimumAmount, uint _eventEndDate) {
+    constructor(string memory _description, uint _minimumAmount, uint _eventEndDate, address creator) {
         // minimum amount should be greater than zero, because of contributors map (wei)
         require(_minimumAmount!=0);
         
         // ending date for even must be greater than time at which being instantiated
         require(_eventEndDate > block.timestamp);
-        manager = msg.sender;
+        manager = creator;
         description = _description;
         minimumAmount = _minimumAmount;
         eventEndDate = _eventEndDate;
