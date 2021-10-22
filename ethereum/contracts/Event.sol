@@ -6,9 +6,10 @@ contract EventFactory {
     
     address[] public allEvents;
     
-    function createEvent(string memory _description, uint _minimumAmount, uint _eventEndDate) public{
+    function createEvent(string memory _description, uint _minimumAmount, uint _eventEndDate) public returns (address eventAddress){
         address newEvent = address(new Event(_description, _minimumAmount, _eventEndDate, msg.sender));
         allEvents.push(newEvent);
+		return newEvent;
     }
     
     function getEvents() public view returns(address[] memory _allEvents) {
