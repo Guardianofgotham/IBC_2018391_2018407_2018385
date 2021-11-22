@@ -1,19 +1,28 @@
-import React,{useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import EventsDisplay from '../Components/EventsDisplay'
 import factory from '../ethereum/factory'
 
-function Homepage({user}) {
+function Homepage({ user }) {
 
 	const [eventAddresses, setEventAddresses] = useState([])
 
 	useEffect(async () => {
-		const eventsList = await factory.methods.getEvents().call();
-		setEventAddresses(eventsList)
+		refreshEventList()
 	}, [])
+
+	async function refreshEventList() {
+		const eventsList = await factory.methods.getEvents().call();
+		setEventAddresses([])
+		setEventAddresses(eventsList)
+
+	}
 
 	return (
 		<div>
-			<EventsDisplay user={user} eventAddresses={eventAddresses} />
+			<EventsDisplay
+				refreshEventList={refreshEventList}
+				user={user}
+				eventAddresses={eventAddresses} />
 		</div>
 	)
 }

@@ -14,10 +14,15 @@ import DateRangeIcon from '@mui/icons-material/DateRange';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ContributionDialog from './ContributionDialog';
+import RequestsDialog from './RequestsDialog';
+import CreateRequestDialog from './CreateRequestDialog';
 
 
-export default function EventCardShowDetails({user, isContributor, eventDetails, eventAddress }) {
-	const [open, setOpen] = useState(false);
+export default function EventCardShowDetails({user, isContributor, eventDetails, eventAddress, refreshEventList }) {
+	const [openContribution, setOpenContribution] = useState(false);
+	const [openRequests, setOpenRequests] = useState(false);
+	const [openCreateRequest, setOpenCreateRequest] = useState(false);
+
 	const { _manager, _description, _numRequests, _contributorsCount, _totalAmountCollected, _remainingBalance, _minimumAmount, _eventEndDate } = eventDetails;
 
 	return (
@@ -35,22 +40,22 @@ export default function EventCardShowDetails({user, isContributor, eventDetails,
 				<Typography variant="body2">
 					<List style={{ display: 'flex', flexDirection: 'row', padding: 0 }}>
 						<ListItem>
-							<RequestPageIcon /> {_numRequests}
+							<RequestPageIcon />  {_numRequests} Requests
 						</ListItem>
 						<ListItem>
-							<GroupIcon /> {_contributorsCount}
+							<GroupIcon /> {_contributorsCount} Contributors
 						</ListItem>
 						<ListItem>
-							<MonetizationOnIcon /> {_totalAmountCollected}
+							<MonetizationOnIcon /> {_totalAmountCollected} Collected (wei)
 						</ListItem>
 						<ListItem>
-							<AccountBalanceIcon /> {_remainingBalance}
+							<AccountBalanceIcon /> {_remainingBalance} Balance (wei)
 						</ListItem>
 						<ListItem>
-							<AttachMoneyIcon /> {_minimumAmount}
+							<AttachMoneyIcon /> {_minimumAmount} Min Cont (wei)
 						</ListItem>
 						<ListItem>
-							<DateRangeIcon /> {(new Date(_eventEndDate*1000)).toUTCString()}
+							<DateRangeIcon /> {(new Date(_eventEndDate*1000)).toUTCString()} 
 						</ListItem>
 					</List>
 
@@ -59,10 +64,16 @@ export default function EventCardShowDetails({user, isContributor, eventDetails,
 				</Typography>
 			</CardContent>
 			<CardActions>
-				<Button onClick={()=>setOpen(true)} size="small">Contribute</Button>
-				<Button disabled={!isContributor} size="small">Show Requests</Button>
+				<Button onClick={()=>setOpenContribution(true)} size="small">Contribute</Button>
+				<Button disabled={!isContributor} onClick={()=>setOpenRequests(true)} size="small">Show Requests</Button>
+				{
+					_manager.toLowerCase()===user && 
+					<Button onClick={()=>setOpenCreateRequest(true)}> Create Request </Button>
+				}
 			</CardActions>
-			<ContributionDialog user={user} eventDetails={eventDetails} eventAddress={eventAddress} open={open} setOpen={setOpen} />
+			<ContributionDialog refreshEventList={refreshEventList} user={user} eventDetails={eventDetails} eventAddress={eventAddress} open={openContribution} setOpen={setOpenContribution} />
+			<RequestsDialog refreshEventList={refreshEventList} open={openRequests} setOpen={setOpenRequests} user={user} eventDetails={eventDetails} eventAddress={eventAddress} />
+			<CreateRequestDialog refreshEventList={refreshEventList} open={openCreateRequest} setOpen={setOpenCreateRequest} user={user} eventDetails={eventDetails} eventAddress={eventAddress} />
 		</Card>
 	);
 }

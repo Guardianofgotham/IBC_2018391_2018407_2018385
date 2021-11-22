@@ -4,11 +4,11 @@ import ListItem from '@mui/material/ListItem';
 import EventCard from './EventCard'
 
 
-function EventsDisplay({ eventAddresses, user }) {
+function EventsDisplay({ eventAddresses, user, refreshEventList }) {
 	return (
 		<div>
 			{/* <List style={{flex:1, width: "100%"}}> */}
-				{eventAddresses.map((eventAddress) =><EventCard user={user} eventAddress={eventAddress} />				)}
+				{eventAddresses.map((eventAddress) =><EventCard refreshEventList={refreshEventList} user={user} eventAddress={eventAddress} />				)}
 			{/* </List> */}
 		</div>
 	)

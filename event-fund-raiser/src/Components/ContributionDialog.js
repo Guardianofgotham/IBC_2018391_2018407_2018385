@@ -9,7 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { CircularProgress } from '@mui/material';
 import event from '../ethereum/event'
 
-export default function ContributionDialog({user, eventAddress, open, setOpen, eventDetails }) {
+export default function ContributionDialog({refreshEventList, user, eventAddress, open, setOpen, eventDetails }) {
 	const { _manager, _description, _numRequests, _contributorsCount, _totalAmountCollected, _remainingBalance, _minimumAmount, _eventEndDate } = eventDetails;
 	const [amount, setAmount] = useState(Number(_minimumAmount));
 	const [Loading, setLoading] = useState(false);
@@ -24,11 +24,18 @@ export default function ContributionDialog({user, eventAddress, open, setOpen, e
 
 	const makePayment = async () => {
 		setLoading(true);
-		const response  = await event(eventAddress).methods.pay().send({
-			from: user,
-			value: amount
-		})
-		console.log(response);
+		try{
+			const response  = await event(eventAddress).methods.pay().send({
+				from: user,
+				value: amount
+			})
+			refreshEventList()
+			console.log(response);
+		}
+		catch(e)
+		{
+			alert(e.message);
+		}
 		setLoading(false);
 		handleClose();
 	}

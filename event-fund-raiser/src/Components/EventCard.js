@@ -4,7 +4,7 @@ import event from '../ethereum/event'
 import EventCardShowDetails from "./EventCardShowDetails"
 
 
-function EventCard({ eventAddress, user }) {
+function EventCard({ eventAddress, user, refreshEventList }) {
 	const [eventDetails, setEventDetails] = useState(undefined);
 	const [isContributor, setIsContributor] = useState(false);
 
@@ -23,7 +23,7 @@ function EventCard({ eventAddress, user }) {
 					eventDetails === undefined ? <div>
 						<CircularProgress /> Getting details from {eventAddress}
 						</div >:
-						<EventCardShowDetails user={user} isContributor={isContributor} eventAddress={eventAddress} eventDetails={eventDetails} />
+						<EventCardShowDetails refreshEventList={refreshEventList} user={user} isContributor={isContributor} eventAddress={eventAddress} eventDetails={eventDetails} />
 				}
 			</h1>
 		</div>
