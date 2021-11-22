@@ -19,10 +19,13 @@ function Homepage({ user }) {
 
 	return (
 		<div>
-			<EventsDisplay
-				refreshEventList={refreshEventList}
-				user={user}
-				eventAddresses={eventAddresses} />
+			{
+				user &&
+				<EventsDisplay
+					refreshEventList={refreshEventList}
+					user={user}
+					eventAddresses={eventAddresses} />
+			}
 		</div>
 	)
 }

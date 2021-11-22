@@ -9,7 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { CircularProgress } from '@mui/material';
 import event from '../ethereum/event'
 
-export default function CreateRequestDialog({refreshEventList, user, eventAddress, open, setOpen, eventDetails }) {
+export default function CreateRequestDialog({ refreshEventList, user, eventAddress, open, setOpen, eventDetails }) {
 	const { _manager, _description, _numRequests, _contributorsCount, _totalAmountCollected, _remainingBalance, _minimumAmount, _eventEndDate } = eventDetails;
 	const [Loading, setLoading] = useState(false);
 	const [requestDetails, setRequestDetails] = useState({
@@ -38,13 +38,13 @@ export default function CreateRequestDialog({refreshEventList, user, eventAddres
 				value: 0
 			})
 			refreshEventList()
+			handleClose();
 			console.log(response);
 		}
 		catch (e) {
 			alert(e.message);
 		}
 		setLoading(false);
-		handleClose();
 	}
 
 	return (
@@ -67,7 +67,7 @@ export default function CreateRequestDialog({refreshEventList, user, eventAddres
 							/>
 							<TextField
 								margin="dense"
-								id="description"
+								id="address"
 								label={`Receivers Address`}
 								type="text"
 								fullWidth

@@ -45,6 +45,7 @@ export default function RequestsDialog({refreshEventList, open, setOpen, user, e
 
 	const handleClose = () => {
 		setOpen(false);
+		refreshEventList()
 	};
 
 	const handleApproval = async (index) => {
@@ -54,7 +55,6 @@ export default function RequestsDialog({refreshEventList, open, setOpen, user, e
 				from: user,
 				value: 0
 			})
-			refreshEventList()
 		}
 		catch (e) {
 			alert(e.message);
@@ -70,12 +70,12 @@ export default function RequestsDialog({refreshEventList, open, setOpen, user, e
 				from: user,
 				value: 0
 			})
-			refreshEventList()
+			refreshValues();
+			
 		}
 		catch (e) {
 			alert(e.message);
 		}
-		refreshValues();
 		setLoading(false);
 	}
 
@@ -137,7 +137,7 @@ export default function RequestsDialog({refreshEventList, open, setOpen, user, e
 													</Button>
 												</TableCell>
 												<TableCell align="center">
-													<Button onClick={()=>handleFinalize(index)} disabled={finalized || approversCount < (_contributorsCount / 2) || _manager.toLowerCase()!==user}>
+													<Button onClick={()=>handleFinalize(index)} disabled={finalized || approversCount <= (_contributorsCount / 2) || _manager.toLowerCase()!==user}>
 														Finalize
 													</Button>
 												</TableCell>

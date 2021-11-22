@@ -30,6 +30,7 @@ export default function ContributionDialog({refreshEventList, user, eventAddress
 				value: amount
 			})
 			refreshEventList()
+			handleClose();
 			console.log(response);
 		}
 		catch(e)
@@ -37,7 +38,6 @@ export default function ContributionDialog({refreshEventList, user, eventAddress
 			alert(e.message);
 		}
 		setLoading(false);
-		handleClose();
 	}
 
 	return (

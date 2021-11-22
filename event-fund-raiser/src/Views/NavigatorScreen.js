@@ -54,7 +54,7 @@ function screenHandler(user ,currentScreenName, setCurrentScreenName)
 		case CONSTANTS.SCREENS.Homepage:
 			return <Homepage user={user} />
 		case CONSTANTS.SCREENS.CreateEvent:
-			return <CreateEvent />
+			return <CreateEvent user={user} />
 		case CONSTANTS.SCREENS.MyContributions:
 			return <MyContributions />
 		case CONSTANTS.SCREENS.MyEvents:
