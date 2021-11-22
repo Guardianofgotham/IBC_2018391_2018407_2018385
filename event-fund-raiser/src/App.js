@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route, useHistory } from 'react-router
 import 'semantic-ui-css/semantic.min.css'
 import MetaMaskError from './Views/MetaMaskError';
 import NotFound from './Views/NotFound';
-import HomePage from './Views/HomePage';
+import NavigatorScreen from './Views/NavigatorScreen';
 import NewEvent from './Views/NewEvent';
 
 
@@ -17,7 +17,7 @@ function App() {
 					<Route exact path="/MetaMaskError" component={MetaMaskError} />
 					<Route path="/Notfound" component={NotFound} />
 					<Route path="/NewEvent" component={NewEvent} />
-					<Route path="/" component={HomePage} />
+					<Route path="/" component={NavigatorScreen} />
 				</Switch>
 			</Router>
 		</div>

@@ -64,14 +64,16 @@ contract Event{
         newRequest.finalized = false;
     }
     
-    function getEventDetails() public view returns (address _manager, string memory _description, uint _numRequests, uint _contributorsCount, uint _totalAmountCollected, uint _remainingBalance){
+    function getEventDetails() public view returns (address _manager, string memory _description, uint _numRequests, uint _contributorsCount, uint _totalAmountCollected, uint _remainingBalance, uint _minimumAmount, uint _eventEndDate){
         return (
             manager,
             description,
             requests.length,
             contributorsAddressList.length,
             totalAmountCollected,
-            address(this).balance
+            address(this).balance,
+			minimumAmount,
+			eventEndDate
         );
     }
     
