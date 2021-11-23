@@ -9,11 +9,17 @@ function EventCard({ eventAddress, user, refreshEventList }) {
 	const [isContributor, setIsContributor] = useState(false);
 
 	useEffect(async () => {
-		const data = await event(eventAddress).methods.getEventDetails().call()
-		setEventDetails(data);
-		const contributionStatus = await event(eventAddress).methods.isContributor(user).call() || data._manager.toLowerCase() === user;
-		console.log(user, data._manager)
-		setIsContributor(contributionStatus);
+		try{
+			const data = await event(eventAddress).methods.getEventDetails().call()
+			setEventDetails(data);
+			const contributionStatus = await event(eventAddress).methods.isContributor(user).call() || data._manager.toLowerCase() === user;
+			console.log(user, data._manager)
+			setIsContributor(contributionStatus);
+		}
+		catch(e)
+		{
+			alert(e.message)
+		}
 	}, [])
 
 	return (

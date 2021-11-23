@@ -4,10 +4,14 @@ import { TextField, Button, Alert, CircularProgress } from '@mui/material'
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import factory from '../ethereum/factory'
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { IconButton } from '@mui/material';
 
-function CreateEvent({user}) {
-	const [Loading, setLoading] = useState(false)
+function CreateEvent({ user }) {
+	const [Loading, setLoading] = useState(false);
+	const [newEventAddress, setNewEventAddress] = useState(undefined);
 	const [eventDetails, setEventDetails] = useState({
 		description: "",
 		minmAmount: 1,
@@ -16,19 +20,18 @@ function CreateEvent({user}) {
 
 	async function handleEventCreation() {
 		setLoading(true);
-		try{
-			const address = await factory.methods.createEvent(
+		try {
+			const reciept = await factory.methods.createEvent(
 				eventDetails.description,
 				eventDetails.minmAmount,
-				eventDetails.expiryDate.getTime()/1000
+				eventDetails.expiryDate.getTime() / 1000
 			).send({
 				from: user,
 				value: 0
 			});
-			console.log(address);
+			setNewEventAddress(reciept.events.ContractCreated.returnValues.newAddress);
 		}
-		catch(e)
-		{
+		catch (e) {
 			alert(e.message)
 		}
 		setLoading(false);
@@ -40,10 +43,11 @@ function CreateEvent({user}) {
 				display="flex"
 				justifyContent="center"
 				alignItems="center"
-				minHeight="40vh"
+				minHeight="60vh"
 				textAlign="center"
 				marginX='40%'
 				flexDirection='column'
+				alignSelf='center'
 			>
 				<TextField
 					autoFocus
@@ -80,7 +84,23 @@ function CreateEvent({user}) {
 					/>
 				</LocalizationProvider>
 				<br />
-				{Loading ? <CircularProgress />: <Button disabled={eventDetails.description.length==0} onClick={handleEventCreation}>Create Event</Button>}
+				{Loading ? <CircularProgress /> : <Button disabled={eventDetails.description.length == 0} onClick={handleEventCreation}>Create Event</Button>}
+				<br />
+				{newEventAddress &&
+					<CopyToClipboard text={newEventAddress}>
+						<TextField
+							label="Deployed at"
+							disabled={true}
+							fullWidth
+							value={newEventAddress}
+							InputProps={{
+								endAdornment: <IconButton>
+									<ContentCopyIcon />
+								</IconButton>
+							}}
+						/>
+					</CopyToClipboard>
+				}
 			</Box>
 		</div>
 	)

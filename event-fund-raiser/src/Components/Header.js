@@ -65,8 +65,7 @@ export default function Header({user, setCurrentScreenName}) {
 						>
 							
 							{user && <MenuItem disabled onClick={handleClose}>Account: {user.slice(0, 8)}</MenuItem>}
-							<MenuItem onClick={() => handleClick(CONSTANTS.SCREENS.MyContributions)}>My Contributions</MenuItem>
-							<MenuItem onClick={() => handleClick(CONSTANTS.SCREENS.MyEvents)}>My Events</MenuItem>
+							<MenuItem onClick={() => handleClick(CONSTANTS.SCREENS.SearchEvent)}>Search Event</MenuItem>
 							<MenuItem onClick={() => handleClick(CONSTANTS.SCREENS.CreateEvent)}>Create Event</MenuItem>
 							
 						</Menu>

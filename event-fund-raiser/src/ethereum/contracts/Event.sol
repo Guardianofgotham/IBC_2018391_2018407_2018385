@@ -4,11 +4,31 @@ pragma solidity >=0.7.0 <0.9.0;
 
 contract EventFactory {
     
+	// Address of 10 latest events
     address[] public allEvents;
+	
+	// Max Array Size
+	uint public MAX_SIZE = 10;
+
+	// current Array Index
+	uint public INDEX = 0;
+
+	event ContractCreated(address newAddress);
     
     function createEvent(string memory _description, uint _minimumAmount, uint _eventEndDate) public returns (address eventAddress){
         address newEvent = address(new Event(_description, _minimumAmount, _eventEndDate, msg.sender));
-        allEvents.push(newEvent);
+
+		if(allEvents.length<MAX_SIZE)
+		{
+			allEvents.push(newEvent);
+		}
+		else{
+			allEvents[INDEX] = newEvent;
+			INDEX = INDEX + 1;
+			INDEX = INDEX%MAX_SIZE;
+		}
+
+        emit ContractCreated(newEvent);
 		return newEvent;
     }
     

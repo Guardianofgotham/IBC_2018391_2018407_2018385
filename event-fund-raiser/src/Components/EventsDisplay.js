@@ -1,10 +1,9 @@
 import React from 'react'
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
 import EventCard from './EventCard'
 
 
 function EventsDisplay({ eventAddresses, user, refreshEventList }) {
+	console.log(eventAddresses)
 	return (
 		<div>
 			{/* <List style={{flex:1, width: "100%"}}> */}

@@ -2,13 +2,10 @@ import React, { useEffect, useState } from 'react'
 import web3 from '../ethereum/web3';
 import { useHistory } from 'react-router-dom';
 import Header from '../Components/Header'
-import factory from '../ethereum/factory'
-import event from '../ethereum/event'
 import CONSTANTS from '../CONSTANTS';
 import Homepage from './Homepage';
 import CreateEvent from './CreateEvent';
-import MyContributions from './MyContributions';
-import MyEvents from './MyEvents';
+import SearchEvent from './SearchEvent';
 
 function NavigatorScreen() {
 	let history = useHistory();
@@ -55,10 +52,8 @@ function screenHandler(user ,currentScreenName, setCurrentScreenName)
 			return <Homepage user={user} />
 		case CONSTANTS.SCREENS.CreateEvent:
 			return <CreateEvent user={user} />
-		case CONSTANTS.SCREENS.MyContributions:
-			return <MyContributions />
-		case CONSTANTS.SCREENS.MyEvents:
-			return <MyEvents />
+		case CONSTANTS.SCREENS.SearchEvent:
+			return <SearchEvent user={user} />
 	}
 }
 
