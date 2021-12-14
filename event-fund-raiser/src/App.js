@@ -1,10 +1,9 @@
 import React from 'react';
-import web3 from './web3';
+import web3 from './ethereum/web3';
 import { BrowserRouter as Router, Switch, Route, useHistory } from 'react-router-dom';
-
 import MetaMaskError from './Views/MetaMaskError';
 import NotFound from './Views/NotFound';
-import HomePage from './Views/HomePage';
+import NavigatorScreen from './Views/NavigatorScreen';
 
 
 function App() {
@@ -15,7 +14,7 @@ function App() {
 				<Switch>
 					<Route exact path="/MetaMaskError" component={MetaMaskError} />
 					<Route path="/Notfound" component={NotFound} />
-					<Route path="/" component={HomePage} />
+					<Route path="/" component={NavigatorScreen} />
 				</Switch>
 			</Router>
 		</div>
